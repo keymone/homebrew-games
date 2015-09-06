@@ -19,6 +19,7 @@ class Fceux < Formula
   depends_on "sdl"
   depends_on "libzip"
   depends_on "gtk+3" => :recommended
+  depends_on "lua51" => :build
 
   # Make scons honor PKG_CONFIG_PATH and PKG_CONFIG_LIBDIR
   # Reported upstream: https://sourceforge.net/p/fceultra/bugs/625
@@ -74,19 +75,15 @@ index 4d5b446..36be2c4 100644
      env.ParseConfig(config_string)
      env.Append(CPPDEFINES=["_GTK3"])
      env.Append(CCFLAGS = ["-D_GTK"])
-diff --git a/SConstruct b/SConstruct
-index dc6698e..a23350a 100644
---- a/SConstruct
-+++ b/SConstruct
-@@ -18,7 +18,7 @@ opts.AddVariables(
-   BoolVariable('RELEASE',   'Set to 1 to build for release', 1),
-   BoolVariable('FRAMESKIP', 'Enable frameskipping', 1),
-   BoolVariable('OPENGL',    'Enable OpenGL support', 1),
--  BoolVariable('LUA',       'Enable Lua support', 1),
-+  BoolVariable('LUA',       'Enable Lua support', 0),
-   BoolVariable('GTK', 'Enable GTK2 GUI (SDL only)', 1),
-   BoolVariable('GTK3', 'Enable GTK3 GUI (SDL only)', 0),
-   BoolVariable('NEWPPU',    'Enable new PPU core', 1),
+@@ -140,7 +140,7 @@ else:
+     lua_available = False
+     if conf.CheckLib('lua5.1'):
+       env.Append(LINKFLAGS = ["-ldl", "-llua5.1"])
+-      env.Append(CCFLAGS = ["-I/usr/include/lua5.1"])
++      env.Append(CCFLAGS = ["-I/usr/local/include/lua5.1"])
+       lua_available = True
+     elif conf.CheckLib('lua'):
+       env.Append(LINKFLAGS = ["-ldl", "-llua"])
 diff --git a/src/drivers/sdl/SConscript b/src/drivers/sdl/SConscript
 index 7a53b07..6a9cbeb 100644
 --- a/src/drivers/sdl/SConscript

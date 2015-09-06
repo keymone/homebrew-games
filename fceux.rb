@@ -23,8 +23,6 @@ class Fceux < Formula
 
   # Make scons honor PKG_CONFIG_PATH and PKG_CONFIG_LIBDIR
   # Reported upstream: https://sourceforge.net/p/fceultra/bugs/625
-  # Also temporarily kill Lua support pending further investigation as to build failures.
-  # It is listed as "Optional" in the build docs, but will be reinstated asap.
   # Additional patches added to remove all traces of X11 and to enable a build against gtk+3.
   # Filed as bug https://sourceforge.net/p/fceultra/bugs/703/
   patch :DATA
@@ -80,7 +78,7 @@ index 4d5b446..36be2c4 100644
      if conf.CheckLib('lua5.1'):
        env.Append(LINKFLAGS = ["-ldl", "-llua5.1"])
 -      env.Append(CCFLAGS = ["-I/usr/include/lua5.1"])
-+      env.Append(CCFLAGS = ["-I/usr/local/include/lua5.1"])
++      env.Append(CCFLAGS = ["-IHOMEBREW_PREFIX/include/lua5.1"])
        lua_available = True
      elif conf.CheckLib('lua'):
        env.Append(LINKFLAGS = ["-ldl", "-llua"])

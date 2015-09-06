@@ -23,8 +23,6 @@ class Fceux < Formula
 
   # Make scons honor PKG_CONFIG_PATH and PKG_CONFIG_LIBDIR
   # Reported upstream: https://sourceforge.net/p/fceultra/bugs/625
-  # Also temporarily kill Lua support pending further investigation as to build failures.
-  # It is listed as "Optional" in the build docs, but will be reinstated asap.
   # Additional patches added to remove all traces of X11 and to enable a build against gtk+3.
   # Filed as bug https://sourceforge.net/p/fceultra/bugs/703/
   patch :DATA
